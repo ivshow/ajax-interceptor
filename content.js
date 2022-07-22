@@ -50,17 +50,50 @@ if (window.self === window.top) {
       iframe.style.setProperty('box-shadow', '0 0 15px 2px rgba(0,0,0,0.12)', 'important');
       iframe.frameBorder = "none"; 
       iframe.src = chrome.extension.getURL("iframe/index.html")
+      iframe.addEventListener('click', e => s.stopPropagation());
       document.body.appendChild(iframe);
+
       let show = false;
+
+      const togglePanel = (value) => {
+        show = value ?? !show;
+        iframe.style.setProperty('transform', show ? 'translateX(0)' : 'translateX(470px)', 'important');
+      }
 
       chrome.runtime.onMessage.addListener((msg, sender) => {
         if (msg == 'toggle') {
-          show = !show;
-          iframe.style.setProperty('transform', show ? 'translateX(0)' : 'translateX(470px)', 'important');
+          togglePanel();
         }
 
         return true;
       });
+
+      window.addEventListener('click', () => togglePanel(false));
+
+      /**
+       * 删除彩云翻译icon
+       */
+      function removeCaiYunXiaoYiIcon() {
+        const createStyleSheet = () => {
+          var head = document.head || document.getElementsByTagName('head')[0];
+          var style = document.createElement('style');
+          style.type = 'text/css';
+          head.appendChild(style);
+          return style.sheet || style.styleSheet;
+        };
+
+        // 创建 stylesheet 对象
+        const sheet = createStyleSheet();
+        const addCSS = (selector, rules, index = 0) => {
+          sheet.insertRule(selector + "{" + rules + "}", index);
+        }
+
+        addCSS('.cyxy-official, .cyxy-personal, .cyxy-footer', `display: none !important;`);
+        addCSS('div.cyxy-function', `bottom: 10px !important;`);
+        addCSS('div.cyxy-function-hint', `bottom: 8px !important;`);
+      }
+
+      removeCaiYunXiaoYiIcon();
     }
   }
 }
