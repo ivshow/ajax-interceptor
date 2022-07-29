@@ -70,29 +70,6 @@ if (window.self === window.top) {
 
       window.addEventListener('click', () => togglePanel(false));
 
-      /**
-       * 删除彩云翻译icon
-       */
-      function removeCaiYunXiaoYiIcon() {
-        const createStyleSheet = () => {
-          var head = document.head || document.getElementsByTagName('head')[0];
-          var style = document.createElement('style');
-          style.type = 'text/css';
-          head.appendChild(style);
-          return style.sheet || style.styleSheet;
-        };
-
-        // 创建 stylesheet 对象
-        const sheet = createStyleSheet();
-        const addCSS = (selector, rules, index = 0) => {
-          sheet.insertRule(selector + "{" + rules + "}", index);
-        }
-
-        addCSS('.cyxy-official, .cyxy-personal, .cyxy-footer', `display: none !important;`);
-        addCSS('div.cyxy-function', `bottom: 10px !important;`);
-        addCSS('div.cyxy-function-hint', `bottom: 8px !important;`);
-      }
-
       removeCaiYunXiaoYiIcon();
     }
   }
@@ -140,3 +117,25 @@ window.addEventListener("pageScript", function(event) {
 // s.innerText = `console.log('test')`;
 // document.documentElement.appendChild(s);
 
+/**
+ * 删除彩云翻译icon
+ */
+ function removeCaiYunXiaoYiIcon() {
+  const createStyleSheet = () => {
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    head.appendChild(style);
+    return style.sheet || style.styleSheet;
+  };
+
+  // 创建 stylesheet 对象
+  const sheet = createStyleSheet();
+  const addCSS = (selector, rules, index = 0) => {
+    sheet.insertRule(selector + "{" + rules + "}", index);
+  }
+
+  addCSS('.cyxy-official, .cyxy-personal, .cyxy-footer, iframe[src*="caiyunapp.com/xiaoyi/web_translate_data_stat"]', `display: none !important;`);
+  addCSS('div.cyxy-function', `bottom: 10px !important;`);
+  addCSS('div.cyxy-function-hint', `bottom: 8px !important;`);
+}
