@@ -135,7 +135,7 @@ window.addEventListener("pageScript", function(event) {
     sheet.insertRule(selector + "{" + rules + "}", index);
   }
 
-  addCSS('.cyxy-official, .cyxy-personal, .cyxy-footer, iframe[src*="caiyunapp.com/xiaoyi/web_translate_data_stat"]', `display: none !important;`);
+  addCSS('.cyxy-official, .cyxy-personal, .cyxy-footer, .cyxy-target-popup, iframe[src*="caiyunapp.com/xiaoyi/web_translate_data_stat"]', `display: none !important;`);
   addCSS('div.cyxy-function', `bottom: 10px !important;`);
   addCSS('div.cyxy-function-hint', `bottom: 8px !important;`);
 }
